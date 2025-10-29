@@ -1,49 +1,81 @@
-Arsenal de herramientas
+# Arsenal del Analista: Herramientas de Identificación de Activos y Mapeo de Superficie
 
+> **Introducción**
 Vamos a explicar algunas herramientas de identificación de activos y mapeo de superficie. La mecánica será primero otorgar un resumen teórico respecto de las bondades y características de cada una para luego ir a la parte práctica (instalación y ejemplos de ejecución), otorgando finalmente un mapa conceptual.
 
-Sn1per: Es un framework automatizado de reconnaissance y escaneo de vulnerabilidades, que integra múltiples herramientas (como Nmap, Amass, Metasploit, Nikto, etc.) en un solo flujo. No es solo un escáner; orquesta un ataque completo: recopila OSINT (información pública), escanea puertos, detecta servicios, busca vulnerabilidades web (ej. SQLi, XSS) y genera reportes HTML detallados.
+## Sn1per
 
-Qué hace en detalle: Ejecuta fases secuenciales: reconnaissance (dominios/subdominios), escaneo de puertos, brute-force, explotación básica y post-explotación. Por ejemplo, contra un Windows 10, detecta SMB/RDP abiertos y chequea shares expuestos; en Debian, identifica SSH/HTTP y busca misconfigs. Para web apps, integra escaneos de directorios y vulns comunes.
+**Descripción**
+Es un framework automatizado de reconnaissance y escaneo de vulnerabilidades, que integra múltiples herramientas (como Nmap, Amass, Metasploit, Nikto, etc.) en un solo flujo. No es solo un escáner; orquesta un ataque completo: recopila OSINT (información pública), escanea puertos, detecta servicios, busca vulnerabilidades web (ej. SQLi, XSS) y genera reportes HTML detallados.
 
-Fortalezas: Automatización total (ahorra tiempo en pentests grandes), reportes visuales profesionales. Velocidad media-alta en redes locales.
+**Qué hace en detalle**
+Ejecuta fases secuenciales: reconnaissance (dominios/subdominios), escaneo de puertos, brute-force, explotación básica y post-explotación. Por ejemplo, contra un Windows 10, detecta SMB/RDP abiertos y chequea shares expuestos; en Debian, identifica SSH/HTTP y busca misconfigs. Para web apps, integra escaneos de directorios y vulns comunes.
 
-Limitaciones: Muy ruidoso (genera mucho tráfico, detectable por IDS/firewalls); consume recursos (CPU/RAM); no es sigiloso para entornos stealth.
+**Fortalezas**
+Automatización total (ahorra tiempo en pentests grandes), reportes visuales profesionales. Velocidad media-alta en redes locales.
 
-Amass: Herramienta especializada en enumeración de activos y subdominios mediante OSINT (Open Source Intelligence). Usa fuentes como DNS, certificados SSL, APIs públicas (Shodan, Censys) y brute-force para mapear la superficie de ataque de un dominio o IP. En el manual (p.35), se menciona para identificación inicial de activos expuestos.
+**Limitaciones**
+Muy ruidoso (genera mucho tráfico, detectable por IDS/firewalls); consume recursos (CPU/RAM); no es sigiloso para entornos stealth.
 
-Qué hace en detalle: Realiza enumeración pasiva (sin tocar el target, solo consultas públicas) o activa (brute-force DNS). Por ej., contra un dominio web, encuentra subdominios ocultos; para IPs (como tus VMs), hace reverse lookups para ASNs y hosts relacionados. En Windows, útil para dominios AD; en Linux/Debian, para servidores web expuestos.
+## Amass
 
-Fortalezas: Sigiloso en modo pasivo (no detectable); excelente para web apps (encuentra endpoints ocultos); outputs estructurados (JSON/CSV) para integración con otras tools.
+**Descripción**
+Herramienta especializada en enumeración de activos y subdominios mediante OSINT (Open Source Intelligence). Usa fuentes como DNS, certificados SSL, APIs públicas (Shodan, Censys) y brute-force para mapear la superficie de ataque de un dominio o IP. En el manual (p.35), se menciona para identificación inicial de activos expuestos.
 
-Limitaciones: No escanea puertos o servicios directamente (necesita complementos como Nmap); lento en brute-force grandes; depende de fuentes externas (puede fallar si APIs cambian).
+**Qué hace en detalle**
+Realiza enumeración pasiva (sin tocar el target, solo consultas públicas) o activa (brute-force DNS). Por ej., contra un dominio web, encuentra subdominios ocultos; para IPs (como tus VMs), hace reverse lookups para ASNs y hosts relacionados. En Windows, útil para dominios AD; en Linux/Debian, para servidores web expuestos.
 
-Nmap: El escáner de puertos y servicios más versátil y estándar en ciberseguridad. Descubre hosts vivos, puertos abiertos, versiones de servicios, OS fingerprinting y vulns básicas via scripts NSE (Nmap Scripting Engine). En el manual (p.36), se describe como esencial para mapeo detallado.
+**Fortalezas**
+Sigiloso en modo pasivo (no detectable); excelente para web apps (encuentra endpoints ocultos); outputs estructurados (JSON/CSV) para integración con otras tools.
 
-Qué hace en detalle: Envía paquetes para probar respuestas (SYN/ACK, etc.). Con -sV detecta versiones (ej. Apache en Debian); -O identifica OS (Windows vs Linux); -A agrega scripts para vulns (ej. heartbleed). Contra Windows, detecta RDP/SMB y firewalls; en Debian, SSH/FTP; para web apps, scripts como http-enum buscan directorios.
+**Limitaciones**
+No escanea puertos o servicios directamente (necesita complementos como Nmap); lento en brute-force grandes; depende de fuentes externas (puede fallar si APIs cambian).
 
-Fortalezas: Altamente personalizable (miles de scripts); preciso en detección de OS/servicios; soporta IPv6 y decoys para sigilo.
+## Nmap
 
-Limitaciones: Lento en rangos grandes (sin optimizaciones); puede ser bloqueado por firewalls; no tan rápido como Masscan.
+**Descripción**
+El escáner de puertos y servicios más versátil y estándar en ciberseguridad. Descubre hosts vivos, puertos abiertos, versiones de servicios, OS fingerprinting y vulns básicas via scripts NSE (Nmap Scripting Engine). En el manual (p.36), se describe como esencial para mapeo detallado.
 
-Masscan: Escáner de puertos ultra-rápido, diseñado para escanear Internet entero (inspirado en Nmap pero optimizado). Enfocado en detección masiva de puertos abiertos, sin detalles profundos. En el manual (p.37), se destaca por velocidad en superficies grandes.
+**Qué hace en detalle**
+Envía paquetes para probar respuestas (SYN/ACK, etc.). Con -sV detecta versiones (ej. Apache en Debian); -O identifica OS (Windows vs Linux); -A agrega scripts para vulns (ej. heartbleed). Contra Windows, detecta RDP/SMB y firewalls; en Debian, SSH/FTP; para web apps, scripts como http-enum buscan directorios.
 
-Qué hace en detalle: Usa transmisión asíncrona para enviar millones de paquetes/seg. Escanea rangos IP/puertos; outputs simples (lista de abiertos). Contra Windows, rápido para puertos comunes (80/445); en Debian, ideal para redes grandes; para web apps, detecta 80/443 rápidamente.
+**Fortalezas**
+Altamente personalizable (miles de scripts); preciso en detección de OS/servicios; soporta IPv6 y decoys para sigilo.
 
-Fortalezas: Velocidad extrema (10x Nmap en rangos grandes); bajo overhead; soporta banners básicos.
+**Limitaciones**
+Lento en rangos grandes (sin optimizaciones); puede ser bloqueado por firewalls; no tan rápido como Masscan.
 
-Limitaciones: No detecta versiones/OS por default (necesita flags o integración); menos features (no scripts); outputs crudos.
+## Masscan
 
-Rustscan: Wrapper moderno de Nmap escrito en Rust, enfocado en velocidad y scripting. Escanea puertos rápidamente y pasa results a Nmap para análisis detallado. En el manual (p.37), se menciona para escaneos eficientes.
+**Descripción**
+Escáner de puertos ultra-rápido, diseñado para escanear Internet entero (inspirado en Nmap pero optimizado). Enfocado en detección masiva de puertos abiertos, sin detalles profundos. En el manual (p.37), se destaca por velocidad en superficies grandes.
 
-Qué hace en detalle: Usa algoritmos paralelos para puertos (más rápido que Nmap base); integra Nmap automáticamente. Ej. detecta puertos en segs, luego corre Nmap -sV. Contra Windows/Debian, similar a Nmap pero más rápido; para web apps, bueno para puertos HTTP iniciales.
+**Qué hace en detalle**
+Usa transmisión asíncrona para enviar millones de paquetes/seg. Escanea rangos IP/puertos; outputs simples (lista de abiertos). Contra Windows, rápido para puertos comunes (80/445); en Debian, ideal para redes grandes; para web apps, detecta 80/443 rápidamente.
 
-Fortalezas: Ultra-rápido (escanea 65k puertos en ~3s); fácil scripting (outputs pipeables); moderno y seguro (Rust evita bugs).
+**Fortalezas**
+Velocidad extrema (10x Nmap en rangos grandes); bajo overhead; soporta banners básicos.
 
-Limitaciones: Dependiente de Nmap (no standalone para todo); menos maduro que Nmap; puede fallar en entornos complejos.
+**Limitaciones**
+No detecta versiones/OS por default (necesita flags o integración); menos features (no scripts); outputs crudos.
 
-Instalación
-Vamos a instalar Ubuntu 24.04 para luego instalar las herramientas mencionadas previamente. Luego de instalar Ubuntu por defecto, ejecutamos el comando “ifconfig” para ver nuestra ip pero no funciona. Por ello, instalamos el paquete de “net-tools” para tener éste y otros comandos de red.
+## Rustscan
+
+**Descripción**
+Wrapper moderno de Nmap escrito en Rust, enfocado en velocidad y scripting. Escanea puertos rápidamente y pasa results a Nmap para análisis detallado. En el manual (p.37), se menciona para escaneos eficientes.
+
+**Qué hace en detalle**
+Usa algoritmos paralelos para puertos (más rápido que Nmap base); integra Nmap automáticamente. Ej. detecta puertos en segs, luego corre Nmap -sV. Contra Windows/Debian, similar a Nmap pero más rápido; para web apps, bueno para puertos HTTP iniciales.
+
+**Fortalezas**
+Ultra-rápido (escanea 65k puertos en ~3s); fácil scripting (outputs pipeables); moderno y seguro (Rust evita bugs).
+
+**Limitaciones**
+Dependiente de Nmap (no standalone para todo); menos maduro que Nmap; puede fallar en entornos complejos.
+
+# Instalación Inicial
+
+Vamos a instalar **Ubuntu 24.04* para luego instalar las herramientas mencionadas previamente. Luego de instalar Ubuntu por defecto, ejecutamos el comando “ifconfig” para ver nuestra ip pero no funciona. Por ello, instalamos el paquete de “net-tools” para tener éste y otros comandos de red.
 
 <img width="567" height="187" alt="1" src="https://github.com/user-attachments/assets/1a34470f-f3fb-44ee-a0f5-61d3bceab310" />
 

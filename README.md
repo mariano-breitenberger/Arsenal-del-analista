@@ -103,9 +103,9 @@ Luego, bajaremos git, curl, Python para utilizarlo en breve:
 
 •	sudo apt install git curl python3-pip -y 
 
-INSTALACION DE HERRAMIENTAS
+# Instalación de herramientas
 
-SN1PER
+## SN1PER
 https://github.com/1N3/Sn1per
 Tal como dice la url:
 
@@ -142,6 +142,7 @@ Flags:
 -	-w: Guarda loot en /usr/share/sniper/loot/workspace/miworkspace. Esto es útil si queremos guardar diferentes tipos de escaneos y tener un historial, todo ordenado.
 
 Capturas de pantalla y algunas aclaraciones:
+
 Windows 10:
 
 <img width="567" height="321" alt="10" src="https://github.com/user-attachments/assets/06b749e3-eea8-44a5-a717-05159bdb8bad" />
@@ -169,7 +170,7 @@ Vemos que nos generó el reporte en “miworkspace” tal como le indicamos con 
 <img width="567" height="183" alt="19" src="https://github.com/user-attachments/assets/982799db-6eee-49ec-b7d8-0c76fe76495f" />
 
 
-AMASS
+## AMASS
 
 Hay varias formas de instalarlo pero la recomendada y más fácil sería con Snap y esto instalaría las dependencias:
 
@@ -210,7 +211,7 @@ Mostramos alguna ejecución:
 
 <img width="567" height="64" alt="24" src="https://github.com/user-attachments/assets/b5c49894-0365-4251-b4a6-d0b9c40268f0" />
 
-NMAP
+## NMAP
 
 Instalamos con:
 •	apt install nmap -y
@@ -239,7 +240,7 @@ Vemos como nos detectó arriba que es un equipo virtual (vmware)
 
 <img width="567" height="119" alt="27" src="https://github.com/user-attachments/assets/ceb6138d-76a2-4e64-9d5e-6153cf6d0bd1" />
 
-MASSCAN
+## MASSCAN
 
 Instalamos con:
 
@@ -288,7 +289,7 @@ Vemos un puerto abierto (7680).
 
 <img width="567" height="78" alt="33" src="https://github.com/user-attachments/assets/11163f60-cc49-4be3-a386-9796cdff57c3" />
 
-RUSTSCAN
+## RUSTSCAN
 
 Instalamos con:
 
